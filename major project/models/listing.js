@@ -11,7 +11,11 @@ const listingSchema=new schema({
        filename:String,
 
     },
-    price:Number,
+    price:{
+        type:Number,
+        required:true,
+        min:0,
+    },
     location:String,
     country:String,
     lat:Number,  // stores the coordinates of the location

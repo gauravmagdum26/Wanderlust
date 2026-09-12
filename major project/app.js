@@ -102,24 +102,71 @@ async (req, res) => {
 }
 )
 //Edit Form
-app.get("/listing/:id/edit",async(req,res)=>{
+// app.get("/listing/:id/edit",async(req,res)=>{
+//     let {id}=req.params;
+//     const list=await listing.findById(id);
+//     res.render("listings/edit.ejs",{list});
+// });
+// app.put("/listing/:id", upload.single('list[image]'), async (req, res) => {
+//     let { id } = req.params;
+//     let updateData = { ...req.body.list };
+
+//     if (req.file) {
+//         updateData.image = { url: req.file.path, filename: req.file.filename };
+//     }
+
+//     await listing.findByIdAndUpdate(id, updateData, { runValidators: true });
+//     res.redirect(`/listing/${id}`);
+// });
+// //Update the list
+// app.put("/listing/:id/edit",async(req,res)=>{
+//     let {id}=req.params;
+//     await listing.findByIdAndUpdate(id, {...req.body.list});
+//     res.redirect(`/listing/${id}`);
+// });
+// //Delete list
+// app.delete("/listing/:id",async(req,res)=>{
+//     let {id}=req.params;
+//     await listing.findByIdAndDelete(id);
+//     res.redirect("/listing");
+// });
+//Open particular list
+app.get("/listing/:id",async(req,res)=>{
+    let {id}=req.params;
+    const list=await listing.findById(id);
+    res.render("listings/show.ejs",{list});
+});
+
+// ... POST route stays the same ...
+
+//Edit Form
+app.get("/listing/:id/edit", async(req,res)=>{
     let {id}=req.params;
     const list=await listing.findById(id);
     res.render("listings/edit.ejs",{list});
 });
+
 //Update the list
-app.put("/listing/:id/edit",async(req,res)=>{
-    let {id}=req.params;
-    await listing.findByIdAndUpdate(id, {...req.body.list});
+app.put("/listing/:id", upload.single('list[image]'), async (req, res) => {
+    let { id } = req.params;
+    let updateData = { ...req.body.list };
+
+    if (req.file) {
+        updateData.image = { url: req.file.path, filename: req.file.filename };
+    } else {
+        delete updateData.image;
+    }
+
+    await listing.findByIdAndUpdate(id, updateData, { runValidators: true });
     res.redirect(`/listing/${id}`);
 });
+
 //Delete list
 app.delete("/listing/:id",async(req,res)=>{
     let {id}=req.params;
     await listing.findByIdAndDelete(id);
     res.redirect("/listing");
 });
-
 // app.get("/testlistening",async(req,res)=>{
 // let sampletesting=new listing({
 //     title:"my villa",

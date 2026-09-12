@@ -1,0 +1,26 @@
+<% layout("/layouts/boilerplate") %>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="mb-0">All Listings</h3>
+  <a href="/listing/new" class="btn btn-primary">+ Create New Listing</a>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <% for(let listing of alllists) { %>
+       <div class="col">
+      <div class="card h-100 shadow-sm">
+        <% if (listing.image && listing.image.url) { %>
+          <img src="<%= listing.image.url %>" class="card-img-top" alt="<%= listing.title %>" style="height: 200px; object-fit: cover;">
+        <% } else { %>
+          <img src="https://via.placeholder.com/400x200?text=No+Image" class="card-img-top" alt="No image">
+        <% } %>
+        <div class="card-body">
+          <h5 class="card-title"><%= listing.title %></h5>
+          <p class="card-text text-muted mb-1"><%= listing.location %>, <%= listing.country %></p>
+          <p class="card-text fw-bold">&#8377;<%= listing.price != null ? listing.price.toLocaleString("en-IN") : "N/A" %></p>
+          <a href="/listing/<%= listing._id %>" class="btn btn-outline-primary btn-sm">View Details</a>
+        </div>
+      </div>
+    </div>
+ 
+<% } %>
+</div>
